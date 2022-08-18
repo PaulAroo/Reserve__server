@@ -2,6 +2,7 @@
   "name": "hotelrev",
   "version": "0.0.1",
   "description": "hotel reservaton backend",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
