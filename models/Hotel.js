@@ -49,20 +49,4 @@ const HotelSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model("Hotel", HotelSchema);
-
-/*
-Hotel REV
- - sometimes a detour isn't always a bad idea
-
-choosing between mongoose validation and express validator ????
- https://stackoverflow.com/questions/61688724/what-is-the-difference-between-mongoose-validation-and-using-express-validator#:~:text=If%20the%20validation%20logic%20is,have%20to%20create%20custom%20validators.
-
-
-I believe this stack overflow post answers the question correctly
-
-
-because express-validator is a middle-ware
-it serves as a better validator (less code is run before validation occurs)
-
-*/
+export default mongoose.model("Hotels", HotelSchema);

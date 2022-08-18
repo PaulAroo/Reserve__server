@@ -1,6 +1,12 @@
 import express from "express";
-import { check } from "express-validator";
-import { createHotel } from "../controllers/hotel.js";
+import { check, param } from "express-validator";
+import {
+  createHotel,
+  deleteHotel,
+  getHotel,
+  getHotels,
+  updateHotel,
+} from "../controllers/hotelController.js";
 
 const router = express.Router();
 
@@ -19,5 +25,21 @@ router.post(
   ],
   createHotel
 );
+
+router.put("/:id", [param("id", "hotel id is required").exists()], updateHotel);
+
+router.delete(
+  "/:id",
+  [param("id", "hotel id is required").exists()],
+  deleteHotel
+);
+
+router.get(
+  "/find/:id",
+  [param("id", "hotel id is required").exists()],
+  getHotel
+);
+
+router.get("/", getHotels);
 
 export default router;
