@@ -9,12 +9,23 @@ dotenv.config();
 
 const app = express();
 
-// middlewares
 app.use(json());
+
 app.use("/auth", authRoutes);
 app.use("/hotels", hotelRoutes);
 app.use("/rooms", roomRoutes);
 app.use("/users", userRoutes);
+
+app.use((err, req, res, next) => {
+  const errStatus = err.status || 500;
+  const errMessage = err.Message || "Something went wrong!";
+  return res.status(errStatus).json({
+    success: false,
+    status: errStatus,
+    message: errMessage,
+    stack: err.stack,
+  });
+});
 
 const port = process.env.PORT || 3030;
 const DbURI = process.env.DbURI;
