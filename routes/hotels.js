@@ -7,6 +7,7 @@ import {
   getHotels,
   updateHotel,
 } from "../controllers/hotelController.js";
+import { verifyAdmin } from "../utils/verify.js";
 
 const router = express.Router();
 
@@ -23,14 +24,21 @@ router.post(
     check("rating", "rating must be between 0 and 5").isInt({ min: 0, max: 5 }),
     check("cheapestPrice", " hotel cheapestPrice is required").exists().isInt(),
   ],
+  verifyAdmin,
   createHotel
 );
 
-router.put("/:id", [param("id", "hotel id is required").exists()], updateHotel);
+router.put(
+  "/:id",
+  verifyAdmin,
+  [param("id", "hotel id is required").exists()],
+  updateHotel
+);
 
 router.delete(
   "/:id",
   [param("id", "hotel id is required").exists()],
+  verifyAdmin,
   deleteHotel
 );
 

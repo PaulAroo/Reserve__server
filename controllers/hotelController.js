@@ -2,7 +2,7 @@ import { validationResult } from "express-validator";
 import Hotel from "../models/Hotel.js";
 import { createError } from "../utils/error.js";
 
-const createHotel = async (req, res, next) => {
+export const createHotel = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -17,7 +17,7 @@ const createHotel = async (req, res, next) => {
   }
 };
 
-const updateHotel = async (req, res, next) => {
+export const updateHotel = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -35,7 +35,7 @@ const updateHotel = async (req, res, next) => {
   }
 };
 
-const deleteHotel = async (req, res, next) => {
+export const deleteHotel = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -49,7 +49,7 @@ const deleteHotel = async (req, res, next) => {
   }
 };
 
-const getHotel = async (req, res, next) => {
+export const getHotel = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -63,7 +63,7 @@ const getHotel = async (req, res, next) => {
   }
 };
 
-const getHotels = async (req, res, next) => {
+export const getHotels = async (req, res, next) => {
   try {
     const hotels = await Hotel.find();
     res.status(200).json(hotels);
@@ -71,5 +71,3 @@ const getHotels = async (req, res, next) => {
     next(err);
   }
 };
-
-export { createHotel, updateHotel, deleteHotel, getHotel, getHotels };
