@@ -5,10 +5,14 @@ import userRoutes from "./routes/users.js";
 import hotelRoutes from "./routes/hotels.js";
 import roomRoutes from "./routes/rooms.js";
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
+import cors from "cors";
 dotenv.config();
 
 const app = express();
 
+app.use(cors());
+app.use(cookieParser());
 app.use(json());
 
 app.use("/auth", authRoutes);
@@ -18,7 +22,7 @@ app.use("/users", userRoutes);
 
 app.use((err, req, res, next) => {
   const errStatus = err.status || 500;
-  const errMessage = err.Message || "Something went wrong!";
+  const errMessage = err.message || "Something went wrong!";
   return res.status(errStatus).json({
     success: false,
     status: errStatus,

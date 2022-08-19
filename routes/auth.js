@@ -1,10 +1,25 @@
 import express from "express";
-import { index, register, login } from "../controllers/authController.js";
+import { check } from "express-validator";
+import { register, login } from "../controllers/authController.js";
 
 const router = express.Router();
 
-router.get("/", index);
-router.post("/register", register);
-router.get("/login", login);
+router.post(
+  "/register",
+  [
+    check("username", "username is required").exists(),
+    check("email", "a valid email is required").exists().isEmail(),
+    check("password", "password is required").exists(),
+  ],
+  register
+);
+router.post(
+  "/login",
+  [
+    check("username", "username is required").exists(),
+    check("password", "password is required").exists(),
+  ],
+  login
+);
 
 export default router;
