@@ -1,6 +1,7 @@
 import express from "express";
-import { check, param } from "express-validator";
+import { check, param, query } from "express-validator";
 import {
+  countByCity,
   createHotel,
   deleteHotel,
   getHotel,
@@ -15,14 +16,15 @@ router.post(
   "/",
   [
     check("name", "hotel name is required").exists(),
-    check("type", "hotel type is required").exists(),
     check("city", "city field is required").exists(),
-    check("city", "hotel address is required").exists(),
+    check("address", "hotel address is required").exists(),
     check("distance", "distance field is required").exists(),
     check("title", " hotel title is required").exists(),
     check("desc", " hotel description is required").exists(),
-    check("rating", "rating must be between 0 and 5").isInt({ min: 0, max: 5 }),
-    check("cheapestPrice", " hotel cheapestPrice is required").exists().isInt(),
+    check("rating", "rating must be between 0 and 5").isNumeric({
+      min: 0,
+      max: 5,
+    }),
   ],
   verifyAdmin,
   createHotel
@@ -49,5 +51,11 @@ router.get(
 );
 
 router.get("/", getHotels);
+
+router.get(
+  "/countByCity",
+  [query("city", "query parameter (city) is required").exists()],
+  countByCity
+);
 
 export default router;
