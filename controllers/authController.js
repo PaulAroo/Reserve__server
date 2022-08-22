@@ -34,13 +34,14 @@ const login = async (req, res, next) => {
       user.password
     );
     if (!isPasswordCorrect)
-      return next(createError(400), "wrong password or username");
+      return next(createError(400, "wrong password or username"));
 
     const token = jwt.sign(
       { id: user._id, isAdmin: user.isAdmin },
       process.env.JWT_SECRET
     );
 
+    // TODO: httpOnly boolean value is not getting set
     const { password, isAdmin, ...otherDetails } = user._doc;
     res
       .cookie("access_token", token, {
