@@ -15,10 +15,10 @@ app.use(cors());
 app.use(cookieParser());
 app.use(json());
 
-app.use("/auth", authRoutes);
-app.use("/hotels", hotelRoutes);
-app.use("/rooms", roomRoutes);
-app.use("/users", userRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/hotels", hotelRoutes);
+app.use("/api/rooms", roomRoutes);
+app.use("/api/users", userRoutes);
 
 app.use((err, req, res, next) => {
   const errStatus = err.status || 500;
