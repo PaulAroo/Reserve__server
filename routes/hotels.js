@@ -5,6 +5,7 @@ import {
   createHotel,
   deleteHotel,
   getHotel,
+  getHotelRooms,
   getHotels,
   updateHotel,
 } from "../controllers/hotelController.js";
@@ -56,6 +57,12 @@ router.get(
   "/countByCity",
   [query("city", "query parameter (city) is required").exists()],
   countByCity
+);
+
+router.get(
+  "/rooms/:id",
+  [param("id", "hotel id is required").exists()],
+  getHotelRooms
 );
 
 export default router;
