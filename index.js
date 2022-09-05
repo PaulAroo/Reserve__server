@@ -11,7 +11,12 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: /(http:\/\/localhost:\w+)/,
+    credentials: true,
+  })
+);
 app.use(cookieParser());
 app.use(json());
 
@@ -21,6 +26,7 @@ app.use("/api/rooms", roomRoutes);
 app.use("/api/users", userRoutes);
 
 app.use((err, req, res, next) => {
+  console.log(err.stack);
   const errStatus = err.status || 500;
   const errMessage = err.message || "Something went wrong!";
   return res.status(errStatus).json({

@@ -3,7 +3,6 @@ import { createError } from "../utils/error.js";
 
 export const verifyToken = (req, res, next) => {
   const token = req.cookies.access_token;
-  // console.log(req.cookies);
   if (!token) {
     return next(createError(401, "authentication required!"));
   }

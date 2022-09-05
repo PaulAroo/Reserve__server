@@ -41,7 +41,6 @@ const login = async (req, res, next) => {
       process.env.JWT_SECRET
     );
 
-    // TODO: httpOnly boolean value is not getting set
     const { password, isAdmin, ...otherDetails } = user._doc;
     res
       .cookie("access_token", token, {
