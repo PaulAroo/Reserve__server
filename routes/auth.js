@@ -10,6 +10,9 @@ router.post(
     check("username", "username is required").exists(),
     check("email", "a valid email is required").exists().isEmail(),
     check("password", "password is required").exists(),
+    check("country", "country is required").exists(),
+    check("city", "city is required").exists(),
+    check("phone", "phone number is required").exists(),
   ],
   register
 );

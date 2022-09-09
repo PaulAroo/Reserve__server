@@ -1,5 +1,5 @@
 import express from "express";
-import { check } from "express-validator";
+import { check, param } from "express-validator";
 import {
   createRoom,
   deleteRoom,
@@ -19,6 +19,7 @@ router.post(
     check("price", "room price(as a number) is required").exists().isInt(),
     check("maxPeople", "maxPeople(as a number) is required").exists().isInt(),
     check("desc", "room description is required").exists(),
+    param("hotelid", "hotel id is required").exists(),
   ],
   verifyAdmin,
   createRoom
@@ -28,7 +29,7 @@ router.put("/availability/:id", updateRoomAvailability);
 
 router.put("/:id", verifyAdmin, updateRoom);
 
-router.delete("/:id/:hotelid", verifyAdmin, deleteRoom);
+router.delete("/:roomId/:hotelId", verifyAdmin, deleteRoom);
 
 router.get("/:id", getRoom);
 

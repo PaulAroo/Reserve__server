@@ -30,7 +30,7 @@ export const getUser = async (req, res, next) => {
 };
 export const getAllUsers = async (req, res, next) => {
   try {
-    const users = await User.find();
+    const users = await User.find({ isAdmin: false });
     res.status(200).json(users);
   } catch (err) {
     next(err);
