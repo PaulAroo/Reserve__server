@@ -90,7 +90,7 @@ export const countByCity = async (req, res, next) => {
     const countList = await Promise.all(
       cities.map((city) => {
         const cityName = city.trim();
-        return Hotel.countDocuments({ city: cityName });
+        return Hotel.countDocuments({ city: new RegExp(`^${cityName}$`, "i") });
       })
     );
     const data = cities.map((city, index) => {
