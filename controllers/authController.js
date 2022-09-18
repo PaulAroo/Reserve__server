@@ -12,8 +12,29 @@ const register = async (req, res, next) => {
 
   const newUser = new User(req.body);
   try {
-    await newUser.save();
-    res.status(201).send("user has been created");
+    const user = await User.findOne({ username: req.body.username });
+    if (user)
+      return next(
+        createError(
+          400,
+          `user with username ${req.body.username} already exists`
+        )
+      );
+
+    const userDetails = await newUser.save();
+
+    const { _id, isAdmin, password, ...otherDetails } = userDetails._doc;
+    const token = jwt.sign({ id: _id, isAdmin }, process.env.JWT_SECRET);
+    res
+      .cookie("access_token", token, {
+        httpOnly: true,
+      })
+      .status(201)
+      .json({
+        message: "user has been created",
+        details: { ...otherDetails },
+        isAdmin,
+      });
   } catch (err) {
     next(err);
   }
@@ -41,7 +62,7 @@ const login = async (req, res, next) => {
       process.env.JWT_SECRET
     );
 
-    const { password, isAdmin, ...otherDetails } = user._doc;
+    const { isAdmin, password, ...otherDetails } = user._doc;
     res
       .cookie("access_token", token, {
         httpOnly: true,
