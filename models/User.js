@@ -10,6 +10,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+    lowercase: true,
   },
   email: {
     type: String,
@@ -21,18 +22,18 @@ const UserSchema = new mongoose.Schema({
   },
   country: {
     type: String,
-    required: true,
   },
   city: {
     type: String,
-    required: true,
+    lowercase: true,
   },
   phone: {
     type: String,
-    required: true,
   },
   img: {
     type: String,
+    default:
+      "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg",
   },
   isAdmin: {
     type: Boolean,
